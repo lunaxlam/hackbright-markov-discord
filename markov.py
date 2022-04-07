@@ -4,6 +4,30 @@ import sys, discord, os
 from random import choice
 
 
+# Instantiate a Client object to serve as connection to Discord server
+client = discord.Client()
+
+# Use @client.event() decorator to register an event; @client.event() relies on a "callback" style manner
+@client.event
+# Print the message once the bot has finished logging in and setting things up 
+async def on_ready():
+    print(f'Successfully connected! Logged in as {client.user}.')
+
+
+@client.event
+# If the following conditions are met, do something
+async def on_message(message):
+    # If the message author is the same as the client user; return
+    if message.author == client.user:
+        return
+
+    # if message content starts with arg
+    if message.content.startswith('$hello'):
+        # Output the message
+        await message.channel.send(chains)
+    
+    
+
 def open_and_read_file(filenames):
     """Take list of files. Open them, read them, and return one long string."""
 
@@ -65,24 +89,7 @@ text = open_and_read_file(filenames)
 # Get a Markov chain
 chains = make_chains(text)
 
-# Get text
-output = print(make_text(chains))
+bot_message = make_text(chains)
 
 
-client = discord.Client()
-
-
-@client.event
-async def on_ready():
-    print(f'Successfully connected! Logged in as {client.user}.')
-
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    # TODO: replace this with your code
-
-
-client.run('replace this with your token from secrets.sh')
+client.run(os.environ['DISCORD_TOKEN'])
