@@ -24,7 +24,7 @@ async def on_message(message):
     # if message content starts with arg
     if message.content.startswith('$hello'):
         # Output the message
-        await message.channel.send(chains)
+        await message.channel.send(bot_message)
     
     
 
