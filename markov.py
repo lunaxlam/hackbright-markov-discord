@@ -4,28 +4,6 @@ import sys, discord, os
 from random import choice
 
 
-# Instantiate a Client object to serve as connection to Discord server
-client = discord.Client()
-
-# Use @client.event() decorator to register an event; @client.event() relies on a "callback" style manner
-@client.event
-# Print the message once the bot has finished logging in and setting things up 
-async def on_ready():
-    print(f'Successfully connected! Logged in as {client.user}.')
-
-
-@client.event
-# If the following conditions are met, do something
-async def on_message(message):
-    # If the message author is the same as the client user; return
-    if message.author == client.user:
-        return
-
-    # if message content starts with arg
-    if message.content.startswith('$hello'):
-        # Output the message
-        await message.channel.send(bot_message)
-    
     
 
 def open_and_read_file(filenames):
@@ -91,5 +69,29 @@ chains = make_chains(text)
 
 bot_message = make_text(chains)
 
+
+
+# Instantiate a Client object to serve as connection to Discord server
+client = discord.Client()
+
+# Use @client.event() decorator to register an event; @client.event() relies on a "callback" style manner
+@client.event
+# Print the message once the bot has finished logging in and setting things up 
+async def on_ready():
+    print(f'Successfully connected! Logged in as {client.user}.')
+
+
+@client.event
+# If the following conditions are met, do something
+async def on_message(message):
+    # If the message author is the same as the client user; return
+    if message.author == client.user:
+        return
+
+    # if message content starts with arg
+    if message.content.startswith('hello'):
+        # Output the message
+        await message.channel.send(bot_message)
+    
 
 client.run(os.environ['DISCORD_TOKEN'])
