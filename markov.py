@@ -67,8 +67,6 @@ text = open_and_read_file(filenames)
 # Get a Markov chain
 chains = make_chains(text)
 
-bot_message = make_text(chains)
-
 
 
 # Instantiate a Client object to serve as connection to Discord server
@@ -91,7 +89,7 @@ async def on_message(message):
     # if message content starts with arg
     if message.content.startswith('hello'):
         # Output the message
-        await message.channel.send(bot_message)
+        await message.channel.send(make_text(chains))
     
 
 client.run(os.environ['DISCORD_TOKEN'])
